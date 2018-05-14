@@ -1,0 +1,16 @@
+upload-dir/
+/build/
+/bin/
+upload_dir/
+Zenno.iml
+Zenno.ipr
+Zenno.iws
+.project
+.classpath
+.gradle/
+.settings/
+.idea/
+SpringDemo.iml
+SpringDemo.ipr
+SpringDemo.iws
+out/
