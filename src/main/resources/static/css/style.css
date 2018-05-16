@@ -12,3 +12,26 @@
     border-width: 0px 0px 0px 37px;
     border-color: #202020;
 }
+
+#musicList{
+    position: relative;
+    top: 50px;
+}
+
+#musicList ul li h2 {
+    color: black;
+}
+
+#musicList ul li h2:hover{
+    color: #04B486;
+    background-color: black;
+}
+
+#headerText {
+    position: relative;
+    top: 5px;
+    left: 50%;
+    right: 50%;
+    color: #04B486;
+    font-family: "Gill Sans";
+}

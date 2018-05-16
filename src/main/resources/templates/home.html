@@ -139,17 +139,16 @@ header{
         left: 60%;
         right: 60%;
     }
-
 </style>
 </head>
 <body>
-	<header></header>
+	<header><h1 id="headerText">Zenno</h1></header>
 	<input type="checkbox" id="chk">
 	<label for="chk" class="menu-icon">&#9776</label>
 
 	<div class="bg"></div>
 
-    <button th:unless="${listMusics}" onclick="myBehavior()" class='button'></button>
+    <button th:unless="${listMusics}" onclick="playMusic()" class='button'></button>
 	<ul th:if="${musics}">
 		<li>
 			<audio id="player">
@@ -158,13 +157,16 @@ header{
 		</li>
 	</ul>
 
-	<div th:if="${listMusics}">
+	<div id="musicList" th:if="${listMusics} or ${musics}">
 		<ul>
-			<li th:each="music: ${listMusics}"><a th:href="${music}" th:text="${music}"/></li>
+			<li onclick="playMusic(event)" th:each="music: ${listMusics}" th:id="${music.getMusicName()}">
+				<audio th:src="${music.getMusicPath()}"></audio>
+				<h2 th:text="${music.getMusicName()}"></h2>
+            </li>
 		</ul>
 	</div>
 
-    <div th:unless="${musics}" class="fileGetter">
+    <div th:unless="${musics} or ${listMusics}" class="fileGetter">
         <form method="post" action="/add_music" enctype="multipart/form-data">
             <input type="file" name="musics" id="file" multiple/>
 			<input type="submit" value="Submit" id="okButton" />
@@ -173,7 +175,7 @@ header{
 
 	<nav class="menu" id="principal">
 		<ul>
-			<li><a href="" class="voltar">Voltar</a></li>
+			<li><a href="/" class="voltar">Voltar</a></li>
 			<li><a href="/get_all_musics">Musicas</a></li>
 			<li><a href="#">Artista</a></li>
 			<li><a href="#">Albuns</a></li>

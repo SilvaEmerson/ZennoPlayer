@@ -65,7 +65,6 @@ public class MusicController {
                            Model model){
 
         byte[] musicBytes = null;
-        ArrayList<String> musicsURI = new ArrayList<String>();
         ServletContext context = request.getServletContext();
         String path = context.getRealPath("/Músicas");
         System.out.println(path);
@@ -76,34 +75,14 @@ public class MusicController {
         for (MultipartFile multipartFile: musics){
             try{
                 String destinyPath = uploadingdir + File.separator + multipartFile.getOriginalFilename();
-//
                 musicBytes = multipartFile.getBytes();
-                storageService.store(multipartFile);
-//                this.player.moveMusic(destinyPath, musicBytes);
-//                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(
-//                        new File(destinyPath)
-//                ));
-//
-//                stream.write(musicBytes);
-//                stream.flush();
-//                stream.close();
-//                multipartFile.transferTo(file);
-//                File destinyFile = new File(destinyPath);
-//                destinyFile.createNewFile();
-//
-//                Path transferFile = Paths.get(uploadingdir + multipartFile.getOriginalFilename());
-//                Files.createFile(transferFile);
-//
-//                Files.write(transferFile, musicBytes);
-
-//                musicsURI.add(file.getAbsolutePath());
 
                 InputStream musicFile = multipartFile.getInputStream();
                 Long musicLength = multipartFile.getSize();
                 String musicType = multipartFile.getContentType();
                 String originalPath = multipartFile.getOriginalFilename();
 //                String musicURI = "data:" + musicType + ";base64, " + new String(Base64.encodeBase64(musicBytes));
-                musicsURI.add(destinyPath);
+                storageService.store(multipartFile);
 //                System.out.println(transferFile.toString());
 
                 player.setMusicType(musicFile, musicType, musicLength);
@@ -113,9 +92,8 @@ public class MusicController {
             }
         }
 
-        model.addAttribute("musics", musicsURI);
-        System.out.println(musicsURI.size());
-        return "home";
+//        model.addAttribute("musics", musicsURI);
+        return "redirect:/get_all_musics";
     }
 
     @DeleteMapping(path = "delete_music")
