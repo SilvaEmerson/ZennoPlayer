@@ -4,6 +4,7 @@ import app.model.Music;
 import app.repositories.MusicRepository;
 import app.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class HomeController{
     @Autowired
     private MusicRepository musicRepository;
 
-    private ArrayList<String> musics = new ArrayList<String>();
+    private ArrayList<String> musicsPaths = new ArrayList<String>();
 
     @GetMapping(path = "/")
     public String get(Model model) {
@@ -35,11 +36,20 @@ public class HomeController{
 
     @GetMapping("/get_all_musics")
     public String getListFiles(Model model) {
-        musics.clear();
-        musicRepository.findAll().forEach(music -> musics.add(music.getMusicPath()));
+        musicsPaths.clear();
+        ArrayList<Music> musicsList = new ArrayList<Music>();
+        Iterable<Music> musics = musicRepository.findAll();
+        musics.forEach(music -> musicsPaths.add(music.getMusicPath()));
+        musics.forEach(musicsList::add);
 
-        model.addAttribute("listMusics",
-                musics.stream()
+        musicsList.forEach(music -> {
+            music.setMusicPath("http://localhost:8000/musics/" + music.getMusicPath());
+        });
+
+        System.out.println(musicsList.size());
+        model.addAttribute("listMusics", musicsList);
+        model.addAttribute("listMusicsPath",
+                musicsPaths.stream()
                         .map(fileName -> MvcUriComponentsBuilder
                                 .fromMethodName(HomeController.class, "getMusic", fileName).build().toString())
                         .collect(Collectors.toList()));
