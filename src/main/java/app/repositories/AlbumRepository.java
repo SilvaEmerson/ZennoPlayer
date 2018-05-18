@@ -14,10 +14,4 @@ public interface AlbumRepository extends CrudRepository<Album, Integer> {
 
     @Transactional
     void deleteByAlbumName(String albumName);
-//    @Transactional
-//    @Modifying
-//    @Query("delete from Album where  albumGenre = :genre and albumName = :albumName")
-//    void deleteByNameAndGenre(@Param("albumName") String albumName, @Param("genreName") Genre genreName);
-//    Album findAlbumByAlbumNameAndAlbumGenre(String albumName, Genre genreName);
-//    void deleteByAlbumGenreAndAlbumName(Genre albumGenre, String albumName);
 }
