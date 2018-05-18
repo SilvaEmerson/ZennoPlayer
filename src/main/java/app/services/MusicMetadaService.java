@@ -1,7 +1,9 @@
-package app;
+package app.services;
 
 import de.odysseus.ithaka.audioinfo.AudioInfo;
 import de.odysseus.ithaka.audioinfo.m4a.M4AInfo;
+import de.odysseus.ithaka.audioinfo.mp3.ID3v2Exception;
+import de.odysseus.ithaka.audioinfo.mp3.MP3Exception;
 import de.odysseus.ithaka.audioinfo.mp3.MP3Info;
 
 import java.io.*;
@@ -14,13 +16,22 @@ public class MusicMetadaService {
 
 
     public MusicMetadaService(){}
-    public MusicMetadaService(InputStream musicFile, String musicType, long musicSize) {
+    public MusicMetadaService(InputStream musicFile, String musicType) {
         this.musicType = musicType;
-
-        try(InputStream input = musicFile){
-            this.metadata = (!this.musicType.contains("MP4")) ? new M4AInfo(input) : new MP3Info(input, musicSize);
-        }catch (Exception e){
-            e.printStackTrace();
+        InputStream input = musicFile;
+        try {
+            if (!this.musicType.contains("mpeg")) {
+                this.metadata = new M4AInfo(input);
+            } else {
+                input = new BufferedInputStream(input);
+                this.metadata = new MP3Info(input, input.available());
+            }
+        }catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (ID3v2Exception e1) {
+            e1.printStackTrace();
+        } catch (MP3Exception e1) {
+            e1.printStackTrace();
         }
     }
 

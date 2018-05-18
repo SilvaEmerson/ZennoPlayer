@@ -31,7 +31,7 @@ public class ArtistControllerTest {
     @Test
     public void getArtists() {
         assertThat(testRestTemplate.getForObject(this.url + "get_artists", Integer.class)).isGreaterThan(0);
-    }
+    }//Testando conexão com o banco de dados
 
     @Test
     public void addAndDeleteArtist(){
@@ -42,7 +42,7 @@ public class ArtistControllerTest {
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_artist?artistName="
                 + this.artistName, HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando adicionar e deletar artista
 
 
     @Test
@@ -58,14 +58,14 @@ public class ArtistControllerTest {
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_artist?artistName="
                 + this.artistName, HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando adicionar artistas duplicados
 
     @Test
     public void deleteInexistentArtist(){
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_artist?artistName="
                 + this.artistName, HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando deletar artistas
 
 
 }

@@ -149,15 +149,8 @@ header{
 	<div class="bg"></div>
 
     <button th:unless="${listMusics}" onclick="playMusic()" class='button'></button>
-	<ul th:if="${musics}">
-		<li>
-			<audio id="player">
-				<source th:src="${music}" th:each="music: ${musics}">
-			</audio>
-		</li>
-	</ul>
 
-	<div id="musicList" th:if="${listMusics} or ${musics}">
+	<div id="musicList" th:if="${listMusics}">
 		<ul>
 			<li onclick="playMusic(event)" th:each="music: ${listMusics}" th:id="${music.getMusicName()}">
 				<audio th:src="${music.getMusicPath()}"></audio>
@@ -166,7 +159,7 @@ header{
 		</ul>
 	</div>
 
-    <div th:unless="${musics} or ${listMusics}" class="fileGetter">
+    <div th:unless="${listMusics}" class="fileGetter">
         <form method="post" action="/add_music" enctype="multipart/form-data">
             <input type="file" name="musics" id="file" multiple/>
 			<input type="submit" value="Submit" id="okButton" />

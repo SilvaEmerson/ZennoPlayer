@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class GenreControllerTest {
 
     private String url = "http://localhost:8000/";
-    private String genreName = "Gospel";
+    private String genreName = "Pop";
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -25,8 +25,7 @@ public class GenreControllerTest {
     @Test
     public void genreConnectionTest() throws Exception {
         assertThat(this.testRestTemplate.getForObject(this.url + "get_genres", Iterable.class)).isNotNull();
-
-    }
+    }//Testa a conexão com o banco de dados
 
     @Test
     public void genreAddAndDeleteTest() {
@@ -35,13 +34,13 @@ public class GenreControllerTest {
 
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_genre?genreName="
                         + this.genreName, HttpMethod.DELETE, null, String.class).getBody());
-    }
+    }//Testando o método de adicionar e deletar música
 
     @Test
     public void deleteInexistentGenre(){
         assertNotEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_genre?genreName="
                 + this.genreName, HttpMethod.DELETE, null, String.class).getBody());
-    }
+    }//Testando deletar um gênero inexistente
 
     @Test
     public void genreAddDuplicated() {
@@ -53,5 +52,5 @@ public class GenreControllerTest {
 
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_genre?genreName="
                 + this.genreName, HttpMethod.DELETE, null, String.class).getBody());
-    }
+    }//Testando um gênero duas vezes
 }

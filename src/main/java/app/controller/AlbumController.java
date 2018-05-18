@@ -28,8 +28,7 @@ public class AlbumController{
     }
 
     @GetMapping(path = "get_albums")
-    public @ResponseBody
-    int get() {
+    public @ResponseBody int get() {
         ArrayList<Album> albums = new ArrayList<Album>();
         albumRepository.findAll().forEach(albums::add);
         return albums.size();

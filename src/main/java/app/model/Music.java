@@ -21,15 +21,12 @@ public class Music {
 
     @Column(name = "ano_lancamento")
     private int musicLaunchYear;
-//    @OneToOne(cascade = CascadeType.ALL)
 
     @Column(name = "fk_artista", columnDefinition = "INTEGER")
     private int musicArtist;
-//    @OneToOne(cascade = CascadeType.ALL)
 
     @Column(name = "fk_genero")
     private String musicGenre;
-//    @OneToOne(cascade = CascadeType.ALL)
 
     @Column(name = "fk_album")
     private int musicAlbum;

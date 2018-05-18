@@ -27,7 +27,7 @@ public class AlbumControllerTest {
     @Test
     public void albumGetTest() throws Exception {
         assertThat(this.testRestTemplate.getForObject(this.url + "get_albums", Integer.class)).isGreaterThan(0);
-    }
+    }//testando conecão com o banco de dados
 
     @Test
     public void albumAddAndDeleteTest() {
@@ -38,7 +38,7 @@ public class AlbumControllerTest {
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_album?albumName="
                 + this.albumName , HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando adicionar e deletar álbum
 
     @Test
     public void saveSameAlbum(){
@@ -53,12 +53,12 @@ public class AlbumControllerTest {
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_album?albumName="
                 + this.albumName, HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando adicionar o mesmo álbum
 
     @Test
     public void deleteInexistentAlbum(){
         assertEquals("Deleted", this.testRestTemplate.exchange(this.url + "/delete_album?albumName="
                 + this.albumName, HttpMethod.DELETE, null, String.class)
                 .getBody());
-    }
+    }//Testando deletar um álbum inexistente
 }

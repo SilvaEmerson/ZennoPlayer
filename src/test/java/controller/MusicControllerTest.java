@@ -23,7 +23,7 @@ public class MusicControllerTest {
     private String url = "http://localhost:8000/";
     private String musicName = "Addicted";
     private String musicDuration = "4:30";
-    private String  musicPath = "/home/emerson/Downloads/01 Naked.m4a";
+    private String  musicPath = "/home/emerson/Downloads/01 Impossible.m4a";
     private String musicFormat = "m4a";
     private int musicLaunchYear = 2018;
     private int musicArtist = 1;
@@ -45,27 +45,27 @@ public class MusicControllerTest {
 
     @Before
     @After
-    public void deleteAfter(){
+    public void deleteAfterAndBefore(){
         int musicArtistId = this.artistRepository.findByArtistNameLike("James Arthur").getId();
 
-        musicRepository.deleteByMusicNameAndMusicArtist("Naked", musicArtistId);
+        musicRepository.deleteByMusicNameAndMusicArtist("Impossible", musicArtistId);
     }
 
     @Test
     public void getMusics() {
         assertThat(this.testRestTemplate.getForObject(this.url + "get_musics", Iterable.class)).isNotNull();
-    }
+    }//Testando a conexão com o banco de dados
 
     @Test
     public void addMusic(){
         assertThat(this.testRestTemplate.postForObject(this.url + "add_music?musicPath=" + this.musicPath,
                 null, String.class)).contains("Saved");
-    }
+    }//Testando a adição de música
 
     @Test
     public void addMusicError() {
-        this.musicPath = "/emerson/Downloads/Telegram Desktop/grandson - thoughts & prayers.mp3";
+        this.musicPath = "/emerson/Downloads/PastaInexistente/grandson - thoughts & prayers.mp3";
         assertNotEquals("Saved", this.testRestTemplate.postForObject(this.url + "add_music?musicPath="
                 + this.musicPath, null, String.class));
-    }
+    }//Testando adicionar um música com um caminho inexistente
 }

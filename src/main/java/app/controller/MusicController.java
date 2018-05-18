@@ -53,7 +53,6 @@ public class MusicController {
 
     private Player player;
 
-    public static final String uploadingdir = System.getProperty("user.dir") + "/Zenno/";
 
     @GetMapping(path = "get_musics")
     public @ResponseBody Iterable<Music> getMusics(){
@@ -61,38 +60,25 @@ public class MusicController {
     }
 
     @PostMapping(path = "/add_music", consumes = {"multipart/form-data"})
-    public String addMusic(@RequestParam("musics") MultipartFile[] musics,
-                           Model model){
-
-        byte[] musicBytes = null;
-        ServletContext context = request.getServletContext();
-        String path = context.getRealPath("/Músicas");
-        System.out.println(path);
-        System.out.println(uploadingdir);
+    public String addMusic(@RequestParam("musics") MultipartFile[] musics){
 
         this.player = new Player(genreRepository, albumRepository, artistRepository, musicRepository);
 
         for (MultipartFile multipartFile: musics){
             try{
-                String destinyPath = uploadingdir + File.separator + multipartFile.getOriginalFilename();
-                musicBytes = multipartFile.getBytes();
 
                 InputStream musicFile = multipartFile.getInputStream();
-                Long musicLength = multipartFile.getSize();
                 String musicType = multipartFile.getContentType();
                 String originalPath = multipartFile.getOriginalFilename();
-//                String musicURI = "data:" + musicType + ";base64, " + new String(Base64.encodeBase64(musicBytes));
-                storageService.store(multipartFile);
-//                System.out.println(transferFile.toString());
 
-                player.setMusicType(musicFile, musicType, musicLength);
+                player.setMusicType(musicFile, musicType);
                 this.player.addMusic(musicFile, originalPath);
+                storageService.store(multipartFile);
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
 
-//        model.addAttribute("musics", musicsURI);
         return "redirect:/get_all_musics";
     }
 

@@ -8,13 +8,13 @@ import app.repositories.AlbumRepository;
 import app.repositories.ArtistRepository;
 import app.repositories.GenreRepository;
 import app.repositories.MusicRepository;
+import app.services.MusicMetadaService;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+/**
+ * Padrão de Projeto: Facade
+ */
 
 public class Player {
 
@@ -35,14 +35,12 @@ public class Player {
         this.musicRepository = musicRepository;
     }
 
-    public void setMusicType(InputStream musicFile, String musicType, long musicLength) {
-        this.musicMetadaService = new MusicMetadaService(musicFile, musicType, musicLength);
+    public void setMusicType(InputStream musicFile, String musicType) {
+        this.musicMetadaService = new MusicMetadaService(musicFile, musicType);
     }
 
     public void addMusic(InputStream musicFile, String musicPath) throws Exception{
         try{
-//            this.musicMetadaService.setMusicFilePath(musicPath);
-
             String musicTitle = this.musicMetadaService.getMusicTitle();
             String musicDuration = this.musicMetadaService.getDuration();
             String musicFormat = this.musicMetadaService.getMusicFormat();
@@ -64,16 +62,6 @@ public class Player {
             this.musicRepository.save(new Music(musicTitle, musicPath, musicDuration, musicFormat, musicLaunchYear,
                     musicArtistId, musicGenre, musicAlbumId));
         }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void moveMusic(String destinyPath, byte[] bytes){
-        Path path = Paths.get(destinyPath);
-//        File file = new File(destinyPath);
-        try {
-            Files.write(path, bytes);
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -35,7 +35,7 @@ public class ArtistController {
             this.artistRepository.save(new Artist(artistName, artistAge, artistOriginCountry));
             return "Saved!";
         }catch (Exception e){
-            return "Not saved, error: " +e.getMessage();
+            return "Not saved, error: " + e.getMessage();
         }
     }
 

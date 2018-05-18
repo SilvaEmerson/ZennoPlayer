@@ -48,11 +48,6 @@ public class HomeController{
 
         System.out.println(musicsList.size());
         model.addAttribute("listMusics", musicsList);
-        model.addAttribute("listMusicsPath",
-                musicsPaths.stream()
-                        .map(fileName -> MvcUriComponentsBuilder
-                                .fromMethodName(HomeController.class, "getMusic", fileName).build().toString())
-                        .collect(Collectors.toList()));
         return "home";
     }
 
