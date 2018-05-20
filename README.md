@@ -9,7 +9,7 @@ Music Player using Spring Framework
 * First of all, change MySQL data base `username` and `password` properties in __src/main/resources/application.properties__
 * In the project root, type:  
         `$ gradle bootRun` _or_  
-        `$ gradle build` and `$ java -jar /build/libs/Zenno.jar`
+        `$ gradle build -x test` and `$ java -jar /build/libs/Zenno.jar`
 
 ## Requirements
 
